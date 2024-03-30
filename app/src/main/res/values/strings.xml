@@ -1,0 +1,11 @@
+<!-- strings.xml pour la  gestion des langues   -->
+<resources>
+    <string name="app_name">TP2</string>
+    <string name="text">Mesure de niveau de glucide</string>
+    <string name="tvAgeText">votre age :</string>
+    <string name="tvQuestionText">Est ce-que vous jeunez ?</string>
+    <string name="ouiText">Oui</string>
+    <string name="NonText">Non</string>
+    <string name="ValmText">Valeur mesurée (en mmol/l)</string>
+    <string name="btnText">CONSULTER</string>
+</resources>
