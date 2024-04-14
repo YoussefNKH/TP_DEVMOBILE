@@ -1,4 +1,4 @@
-package com.example.tp2;
+package com.example.tp2.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,12 +12,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tp2.R;
+import com.example.tp2.controller.Controller;
+
 public class MainActivity extends AppCompatActivity {
     private TextView tvAge,tvRepense;
     private EditText etValeur;
     private SeekBar sbAge;
     private RadioButton rbIsFasting,rbIsNotFasting;
     private Button btnConsulter;
+
+    private Controller controller ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Méthode pour initialiser les vues
     private void init(){
+        controller=Controller.getInstance();
         tvAge=findViewById(R.id.tvAge);
         tvRepense=findViewById(R.id.tvReponse);
         etValeur=findViewById(R.id.etValeur);
@@ -63,52 +69,11 @@ public class MainActivity extends AppCompatActivity {
     }
     // Méthode pour effectuer le calcul
     private void calculer() {
+        int age = Integer.parseInt(tvAge.getText().toString());
+        float valeur = Float.parseFloat(etValeur.getText().toString());
 
-        //logique de calcule
-        Log.i("information","onclick sur le btnconsulter");
-        int age;float valeurMesure;
-        //verification des champ remplie ou non
-        boolean flagAge=false,flagValeurMesure=false;
-        if(sbAge.getProgress()!=0){
-            flagAge=true;}
-        else {Toast.makeText(MainActivity.this,"Veuillez sasir votre age",Toast.LENGTH_SHORT).show();
-        }
-        if(etValeur.getText().toString().isEmpty()){
-            Toast.makeText(MainActivity.this,"le Valeur n'est exsite pas",Toast.LENGTH_LONG).show();}
-        else {
-            flagValeurMesure=true;
-        }
+        controller.createPatient(age,valeur,rbIsFasting.isChecked());
+        tvRepense.setText(controller.getReponse());
 
-        if(flagAge&&flagValeurMesure){
-        age=sbAge.getProgress();
-        valeurMesure= Float.valueOf(etValeur.getText().toString());
-        if(rbIsFasting.isChecked()){
-            if (age >= 13) {
-                if (valeurMesure < 5.0) {
-                    tvRepense.setText("Niveau de glycémie est bas");
-                } else if (valeurMesure >= 5.0 && valeurMesure <= 7.2) {
-                    tvRepense.setText("Niveau de glycémie est normal");
-                } else {
-                    tvRepense.setText("Niveau de glycémie est trop élevé");
-                }
-            } else if (age >= 6 && age <= 12) {
-                if (valeurMesure < 5.0) {
-                    tvRepense.setText("Niveau de glycémie est bas");
-                } else if (valeurMesure >= 5.0 && valeurMesure <= 10.0) {
-                    tvRepense.setText("Niveau de glycémie est normal");
-                } else {
-                    tvRepense.setText("Niveau de glycémie est trop élevé");
-                }
-            } else if (age < 6) {
-                if (valeurMesure < 5.5) {
-                    tvRepense.setText("Niveau de glycémie est bas");
-                } else if (valeurMesure >= 5.5 && valeurMesure <= 10.0) {
-                    tvRepense.setText("Niveau de glycémie est normal");
-                } else {
-                    tvRepense.setText("Niveau de glycémie est trop élevé");
-                }
-            }
-        }
-        }
     }//fin du methode calculer
 }//Fin du class MainActivity
